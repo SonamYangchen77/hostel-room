@@ -1,16 +1,14 @@
 const { pool } = require('../config/db');
 
+// Ensure hostels table exists and has 'gender' column
 async function ensureHostelsTable() {
-  // Create the hostels table if it doesn't exist
   await pool.query(`
     CREATE TABLE IF NOT EXISTS hostels (
       id SERIAL PRIMARY KEY,
       name VARCHAR(100) NOT NULL UNIQUE
-      -- gender will be added via ALTER TABLE
     );
   `);
 
-  // Add gender column if it doesn't exist
   await pool.query(`
     ALTER TABLE hostels
     ADD COLUMN IF NOT EXISTS gender VARCHAR(50);
@@ -19,4 +17,17 @@ async function ensureHostelsTable() {
   console.log('✅ Hostels table ensured with gender column');
 }
 
-module.exports = { ensureHostelsTable };
+// 👉 Add this function to insert hostel
+async function insertHostel(name, gender) {
+  const result = await pool.query(
+    `INSERT INTO hostels (name, gender) VALUES ($1, $2) RETURNING *;`,
+    [name, gender]
+  );
+  console.log('✅ Hostel inserted:', result.rows[0]);
+  return result.rows[0];
+}
+
+module.exports = {
+  ensureHostelsTable,
+  insertHostel, // export it
+};
