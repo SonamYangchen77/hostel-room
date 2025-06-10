@@ -8,7 +8,8 @@ const pgSession = require('connect-pg-simple')(session);
 const { pool, ensureUsersTable } = require('./config/db');
 const { ensureRoomsTable } = require('./models/Room');
 const { ensureHostelsTable } = require('./models/Hostel');
-const { ensureApplicationsTable } = require('./models/Application'); // <-- Ensure this is defined
+const { ensureApplicationsTable } = require('./models/Application');
+const { ensureActivitiesTable } = require('./models/Activity');// <-- Ensure this is defined
 const studentController = require('./controllers/studentController');
 const authController = require('./controllers/authController');
 
@@ -42,7 +43,9 @@ async function ensureSessionTable() {
     throw err;
   }
 }
-
+(async () => {
+  await ensureActivitiesTable();
+})();
 // Middleware
 app.use(session({
   store: new pgSession({
