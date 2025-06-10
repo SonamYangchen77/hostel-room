@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="dashboard-container">
+    <div class="content-wrapper">
+
+      <div class="dashboard-header">
+        <h1>Dashboard Overview</h1>
+        <p class="subtitle">Manage your hostel operations efficiently</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card students">
+          <h3>Total Students</h3>
+          <div class="stat-value"><%= totalStudents %></div>
+          <div class="stat-trend positive">Live data</div>
+        </div>
+
+        <div class="stat-card rooms">
+          <h3>Available Rooms</h3>
+          <div class="stat-value"><%= availableRooms %></div>
+          <div class="stat-trend warning">Auto count</div>
+        </div>
+
+        <div class="stat-card applications">
+          <h3>Pending Applications</h3>
+          <div class="stat-value"><%= pendingApplications %></div>
+          <div class="stat-trend urgent">Check queue</div>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+
+        <!-- Recent Activities -->
+        <div class="recent-activities">
+          <h2>Recent Activities</h2>
+          <div class="activity-list">
+            <% if (recentActivities.length === 0) { %>
+              <p>No recent activities.</p>
+            <% } else { %>
+              <% recentActivities.forEach(activity => { %>
+                <div class="activity-item">
+                  <div class="activity-icon">⏺</div>
+                  <div class="activity-details">
+                    <h4><%= activity.action %> - <%= activity.user_name %></h4>
+                    <span class="timestamp"><%= new Date(activity.timestamp).toLocaleString() %></span>
+                  </div>
+                </div>
+              <% }) %>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h2>Quick Actions</h2>
+          <div class="action-grid">
+            <a href="/applications" class="action-card">
+              <div class="action-icon warning">⚠</div>
+              <h3>Review Applications</h3>
+              <p>Process pending applications</p>
+            </a>
+
+            <a href="/report" class="action-card">
+              <div class="action-icon urgent">📊</div>
+              <h3>Generate Report</h3>
+              <p>Download occupancy report</p>
+            </a>
+          </div>
+        </div>
+
+      </div> <!-- dashboard-content -->
+    </div> <!-- content-wrapper -->
+  </div> <!-- dashboard-container -->
+</body>
+</html>

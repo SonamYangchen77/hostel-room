@@ -1,0 +1,204 @@
+/* Background and base styles */
+body {
+    background: url('/images/image.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Add overlay behind main content for readability */
+main {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.logo span {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 10px;
+    vertical-align: middle;
+    color: #fff;
+}
+
+.header-right .logout-btn {
+    color: #fff;
+    background-color: #007bff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.header-right .logout-btn:hover {
+    background-color: ;
+}
+
+/* Welcome section */
+.welcome-section h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* Features grid */
+.features-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    flex: 1 1 250px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+/* ================================
+   Form Styling - Check Availability
+   ================================ */
+
+.check-availability-section {
+  max-width: 480px; /* slightly smaller */
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.check-availability-section h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #222; /* darker but soft */
+  text-align: center;
+}
+
+#availabilityForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#availabilityForm label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555; /* softer dark gray */
+}
+
+#availabilityForm select,
+#availabilityForm input[type="text"] {
+  padding: 9px 12px;
+  font-size: 15px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+#availabilityForm select:focus,
+#availabilityForm input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+#availabilityForm button[type="submit"] {
+  margin-top: 10px;
+  padding: 11px 18px;
+  font-size: 15px;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#availabilityForm button[type="submit"]:hover {
+  background-color: #2356d7;
+}
+
+
+
+/* Stats section */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.stat-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1 1 150px;
+}
+
+.stat-card h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 780px) {
+    .logo span {
+        display: none;
+    }
+    .logo-img {
+        height: 60px; /* smaller logo size */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo span {
+        display: none;
+    }
+    .logo-img {
+        height: 30px; /* smaller logo size */
+    }
+    .login-card {
+        padding: 1.5rem;
+    }
+
+    .login-form button[type="submit"] {
+        padding: 0.8rem;
+    }
+}

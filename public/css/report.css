@@ -1,0 +1,139 @@
+/* Global Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/images/image.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #f2f3f5;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #2d3748;
+  color: #f2f3f5;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+/* Main Container (content next to sidebar) */
+.container {
+  margin-left: 250px; /* matches sidebar width */
+  padding: 2rem;
+  min-height: 100vh;
+  border-radius: 12px 0 0 12px;
+  overflow-x: auto;
+}
+
+/* Page Title */
+.container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+.content-wrapper {
+  background-color: rgba(28, 28, 29, 0.85);
+  border-radius: 12px;
+  padding: 2rem;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  color: #f2f3f5;
+  overflow-x: hidden;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.filters label {
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.filters select,
+.filters input[type="text"] {
+  padding: 0.6rem 1rem;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  background-color: #1a202c;
+  color: #f2f3f5;
+  font-size: 0.95rem;
+}
+
+#downloadBtn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #4fd1c5;
+  color: #1a202c;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#downloadBtn:hover {
+  background-color: #38b2ac;
+}
+
+/* Report Table Styles */
+.report-table {
+  overflow-x: auto;
+  background: #2d3748;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #4a5568;
+  color: #f2f3f5;
+}
+
+th {
+  background-color: #1a202c;
+  font-weight: 600;
+  color: #a0aec0;
+  cursor: pointer;
+  user-select: none;
+}
+
+th[data-order="desc"]::after {
+  content: " ▼";
+  font-size: 0.7rem;
+  color: #718096;
+}
+
+th[data-order="asc"]::after {
+  content: " ▲";
+  font-size: 0.7rem;
+  color: #718096;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #1c2631;
+}
+
+tbody tr:hover {
+  background-color: #2e3a52;
+}

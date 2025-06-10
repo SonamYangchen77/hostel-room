@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Room Applications - HostelHub Admin</title>
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/application.css" />
+</head>
+
+<body>
+  <%- include('partials/header', { currentPage: 'applications' }) %>
+
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>Room Applications</h1>
+
+        <% if (!applications || applications.length===0) { %>
+          <p>No applications yet.</p>
+          <% } else { %>
+            <table>
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Hostel Name</th> <!-- Added Hostel Name header -->
+                  <th>Room Name</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                  <th>Applied At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% applications.forEach(app=> { %>
+                  <tr>
+                    <td>
+                      <%= app.applicant_name %> (<%= app.email %>)
+                    </td>
+                    <td>
+                      <%= app.hostel_name || 'N/A' %>
+                    </td> <!-- Display Hostel Name -->
+                    <td>
+                      <%= app.room_name %>
+                    </td>
+                    <td>
+                      <%= app.reason || '—' %>
+                    </td>
+                    <td class="<%= app.status %>">
+                      <%= app.status %>
+                    </td>
+                    <td>
+                      <%= new Date(app.created_at).toLocaleString() %>
+                    </td>
+                    <td class="actions">
+                      <% if (app.status==='pending' ) { %>
+                        <form action="/applications/<%= app.id %>/approve" method="POST" style="display:inline;">
+                          <button type="submit">Approve</button>
+                        </form>
+                        <form action="/applications/<%= app.id %>/decline" method="POST" style="display:inline;" class="decline-form">
+                          <button type="button" class="decline-btn toggle-reason-btn">Decline</button>
+                        
+                          <input type="text" name="reason" placeholder="Reason" required style="display:none; margin-left: 0.5rem;" />
+                        
+                          <button type="submit" class="submit-decline-btn" style="display:none; margin-left: 0.5rem;">Submit</button>
+                        
+                          <button type="button" class="cancel-decline-btn" style="display:none; margin-left: 0.5rem;">Cancel</button>
+                        </form>
+
+
+                        <% } else { %>
+                          <em>No actions</em>
+                          <% } %>
+                    </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+            <% } %>
+      </div>
+    </div>
+
+    <script src="/js/application.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Room Availability Results - HostelHub</title>
+    <link rel="stylesheet" href="/css/availability.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        #applyFormSection {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #007bff;
+            border-radius: 8px;
+            max-width: 400px;
+        }
+
+        #applyFormSection h3 {
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        #applyFormSection label {
+            display: block;
+            margin: 8px 0 4px;
+        }
+
+        #applyFormSection input,
+        #applyFormSection textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #applyFormSection button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #applyFormSection button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #applyFormSection button#cancelApplyBtn {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="/" class="back-link">← Back to search</a>
+        <div class="header-right">
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <h1>Room Availability Results</h1>
+
+        <section class="search-summary">
+            <p><strong>Search criteria:</strong></p>
+            <ul>
+                <li>Gender: <%= search.gender %>
+                </li>
+                <li>Hostel: <%= search.hostelPreference %>
+                </li>
+            </ul>
+        </section>
+
+        <% const totalAvailable=rooms && rooms.length ? rooms.length : 0; %>
+
+            <% if (totalAvailable===0) { %>
+                <p>Sorry, no rooms are currently available in <strong>
+                        <%= search.hostelPreference %>
+                    </strong> for <%= search.gender %> students.</p>
+                <% } else { %>
+                    <section class="hostel-summary">
+                        <h2>Hostel: <%= search.hostelPreference %>
+                        </h2>
+                        <p>Total Available Rooms: <strong>
+                                <%= totalAvailable %>
+                            </strong></p>
+                        <ul>
+                            <% rooms.forEach(room=> { %>
+                                <li>
+                                    Room Name: <%= room.room_name %>
+                                        <button class="apply-btn" data-room="<%= room.room_name %>"
+                                            data-hostel="<%= search.hostelPreference %>">Apply</button>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </section>
+                    <% } %>
+
+                        <!-- Application Form Modal -->
+                        <div id="applyModal" class="modal hidden">
+                            <div class="modal-content">
+                                <span id="closeModalBtn" class="close">&times;</span>
+                                <h3>Apply for Room</h3>
+                                <form id="applyForm">
+                                    <!-- Hidden inputs for room and hostel -->
+                                    <input type="hidden" name="room_name" id="applyRoomName" />
+                                    <input type="hidden" name="hostel_name" id="applyHostelName" />
+
+                                    <label for="applicantName">Full Name:</label>
+                                    <input type="text" name="applicant_name" id="applicantName" required />
+
+                                    <label for="studentId">Student ID:</label>
+                                    <input type="text" name="student_id" id="studentId" required />
+
+                                    <label for="applicantEmail">RUB Email:</label>
+                                    <input type="email" name="email" id="applicantEmail" required />
+
+                                    <label for="contactNumber">Contact Number:</label>
+                                    <input type="tel" name="contact_number" id="contactNumber" required
+                                        pattern="[0-9]{7,15}" title="Enter a valid phone number" />
+
+                                    <label for="reason">Reason for Applying:</label>
+                                    <textarea name="reason" id="reason" rows="4" required></textarea>
+
+                                    <button type="submit">Submit Application</button>
+                                    <button type="button" id="cancelApplyBtn">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+    </main>
+
+    <script src="/js/availability.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/images/image.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+}
+
+/* Add overlay behind main content for readability */
+main {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.back-link {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.back-link:hover {
+  background-color: #2980b9;
+}
+
+.header-right .logout-btn {
+    color: #fff;
+    background-color: #007bff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.header-right .logout-btn:hover {
+    background-color:;
+}
+/* Headings */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Sections */
+.search-summary,
+.hostel-summary {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.search-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+}
+
+.search-summary li {
+  padding: 0.3rem 0;
+}
+
+/* Apply Button */
+.apply-btn {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.apply-btn:hover {
+  background-color: #007bff;
+}
+
+/* List item spacing */
+ul {
+  padding-left: 1.2rem;
+}
+
+ul li {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+/* Modal background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Modal content box */
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 20px 25px;
+  border-radius: 8px;
+  max-width: 450px;
+  color: #000;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: #000;
+}
+
+/* Show modal */
+.modal.show {
+  display: block;
+}
+
+/* Form inside modal */
+#applyForm h3 {
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+#applyForm label {
+  display: block;
+  margin: 8px 0 4px;
+}
+
+#applyForm input,
+#applyForm textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  font-size: 1rem;
+}
+
+#applyForm button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#applyForm button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+#applyForm button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+#applyForm button#cancelApplyBtn {
+  background-color: #ccc;
+  color: #333;
+}
+
+#applyForm button#cancelApplyBtn:hover {
+  background-color: #999;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+
+  .apply-btn {
+    margin-top: 8px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-content {
+    margin: 10% auto;
+    width: 90%;
+    max-width: 400px;
+  }
+}

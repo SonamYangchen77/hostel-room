@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome to HostelHub</title>
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* You can move this to home.css */
+        .hidden {
+            display: none;
+        }
+
+        .check-availability-btn {
+            margin: 20px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .check-availability-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .check-availability-section {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/images/logo1.png" alt="HostelHub" />
+            <span>HostelHub</span>
+        </div>
+        <div class="header-right">
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome-section">
+            <h1>Welcome to HostelHub</h1>
+            <p class="subtitle">
+                Your one-stop solution for hostel room allocation. Find and apply for the perfect accommodation that
+                suits your needs.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Real-time Availability</h3>
+                    <p>Check live room availability across all college hostels with up-to-date information.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Fair Allocation</h3>
+                    <p>Transparent and fair room allocation system ensuring equal opportunities for all students.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Easy Management</h3>
+                    <p>Simple and intuitive interface to manage your hostel applications and preferences.</p>
+                </div>
+            </div>
+
+            <!-- Trigger Button -->
+            <button id="toggleFormBtn" class="check-availability-btn">Check Room Availability</button>
+        </section>
+
+        <!-- Form (initially hidden) -->
+        <!-- Form (updated with gender-based hostel options) -->
+        <section id="availabilityFormSection" class="check-availability-section hidden">
+            <h2>Check Room Availability</h2>
+            <form id="availabilityForm" method="POST" action="/check-availability">
+
+                <!-- Gender Selection -->
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <!-- Hostel Preference -->
+                <label for="hostelPreference">Hostel Preference:</label>
+                <select id="hostelPreference" name="hostelPreference" required>
+                    <option value="">Select a hostel</option>
+                </select>
+
+                <button type="submit">Check Availability</button>
+            </form>
+        </section>
+
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <h3>
+                    <%= totalUsers %>
+                </h3>
+                <p>Students Accommodated</p>
+            </div>
+            <div class="stat-card">
+                <h3>
+                    <%= totalHostels %>
+                </h3>
+                <p>Partner Hostels</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+
+        // Toggle form visibility
+        document.getElementById('toggleFormBtn').addEventListener('click', function () {
+            const formSection = document.getElementById('availabilityFormSection');
+            formSection.classList.toggle('hidden');
+            this.textContent = formSection.classList.contains('hidden') ? 'Check Room Availability' : 'Hide Form';
+        });
+
+        // Dynamic hostel options based on gender
+        const genderSelect = document.getElementById('gender');
+        const hostelSelect = document.getElementById('hostelPreference');
+
+        const hostelsByGender = {
+            male: ["Yoentenling", "Rabtenling"],
+            female: ["Yeatsholing", "Norbuling"]
+        };
+
+        genderSelect.addEventListener('change', function () {
+            const selectedGender = this.value;
+            hostelSelect.innerHTML = '<option value="">Select a hostel</option>'; // Clear previous options
+
+            if (hostelsByGender[selectedGender]) {
+                hostelsByGender[selectedGender].forEach(hostel => {
+                    const option = document.createElement('option');
+                    option.value = hostel;
+                    option.textContent = hostel;
+                    hostelSelect.appendChild(option);
+                });
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>

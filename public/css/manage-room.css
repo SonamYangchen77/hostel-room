@@ -1,0 +1,213 @@
+/* === GLOBAL BODY & BACKGROUND === */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/images/image.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #f2f3f5;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #2d3748;
+  color: #f2f3f5;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* === MAIN CONTENT AREA === */
+.container {
+  margin-left: 0;
+  max-width: 100%;
+  padding: 2rem 1rem;
+  padding-left: 265px;
+  padding-top: 80px; /* space for fixed header */
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 12px;
+  flex-grow: 1;
+  position: relative;
+}
+
+
+/* === CONTENT WRAPPER INSIDE CONTAINER === */
+.content-wrapper {
+  background-color: rgba(28, 28, 29, 0.85);
+  border-radius: 12px;
+  padding: 2rem;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  color: #f2f3f5;
+  overflow-x: auto;
+}
+
+/* === HEADERS === */
+h1 {
+  margin-bottom: 1rem;
+  color: #f2f3f5;
+  font-size: 1.8rem;
+}
+
+.subtitle {
+  color: #a0aec0;
+  margin: 0.5rem 0 1.5rem;
+}
+
+/* === FORM STYLES === */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+form label {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #f2f3f5;
+}
+
+form input[type="text"],
+form select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  background-color: #1a202c;
+  color: #f2f3f5;
+}
+
+form input[type="checkbox"] {
+  margin-top: 0.5rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+form button {
+  background-color: #2d3748;
+  color: #f2f3f5;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+form button:hover {
+  background-color: #4a5568;
+}
+
+form button#cancel-btn {
+  background-color: #555;
+}
+
+form button#cancel-btn:hover {
+  background-color: #888;
+}
+
+/* === TABLE WRAPPER (ROOMS LIST) === */
+.student-table, #rooms-container {
+  background: #2d3748;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-top: 2rem;
+}
+
+/* === TABLE STYLES === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #1a202c;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #4a5568;
+  color: #f2f3f5;
+}
+
+th {
+  font-weight: 600;
+  color: #a0aec0;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #1e293b;
+}
+
+/* === STATUS TAGS === */
+.available-yes {
+  color: #48bb78;
+  font-weight: 700;
+}
+
+.available-no {
+  color: #f56565;
+  font-weight: 700;
+}
+
+/* === ACTION BUTTONS === */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  color: #f2f3f5;
+}
+
+.actions button:hover {
+  background: #4a5568;
+}
+
+
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .container {
+    margin-left: 60px;
+    max-width: calc(100% - 60px);
+    margin: 2rem 1rem;
+  }
+
+  form label {
+    flex: 1 1 100%;
+  }
+
+  form button {
+    width: 100%;
+  }
+}

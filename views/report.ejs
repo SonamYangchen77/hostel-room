@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Report</title>
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/report.css" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>Report</h1>
+
+        <div class="filters">
+          <label for="hostelFilter">Hostel:</label>
+          <select id="hostelFilter">
+            <option value="">All Hostels</option>
+            <% hostels.forEach(hostel=> { %>
+              <option value="<%= hostel %>">
+                <%= hostel %>
+              </option>
+              <% }) %>
+          </select>
+
+          <label for="searchInput">Search:</label>
+          <input type="text" id="searchInput" placeholder="Filter table..." />
+
+          <button id="downloadBtn">Download CSV</button>
+        </div>
+
+        <div class="report-table">
+          <table id="reportTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Applicant Name</th>
+                <th>Student ID</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Hostel</th>
+                <th>Room</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% reports.forEach(report=> { %>
+                <tr>
+                  <td>
+                    <%= report.id %>
+                  </td>
+                  <td>
+                    <%= report.applicant_name %>
+                  </td>
+                  <td>
+                    <%= report.student_id %>
+                  </td>
+                  <td>
+                    <%= report.email %>
+                  </td>
+                  <td>
+                    <%= report.contact_number %>
+                  </td>
+                  <td>
+                    <%= report.hostel_name %>
+                  </td>
+                  <td>
+                    <%= report.room_name %>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="/js/report.js"></script>
+</body>
+
+</html>

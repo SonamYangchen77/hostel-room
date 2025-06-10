@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Management</title>
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/student-management.css" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+<div class="student-management">
+  <div class="content-wrapper">
+    <div class="page-header">
+        <h1>Student Management</h1>
+        <p class="subtitle">Manage student records and information</p>
+      </div>
+
+      <div class="controls">
+        <div class="search-bar">
+          <input type="text" placeholder="Search students..." />
+        </div>
+      </div>
+
+      <div class="student-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Student ID</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% students.forEach(student=> { %>
+              <tr data-id="<%= student.id %>">
+                <td class="student-info">
+                  <div class="avatar">
+                    <%= student.name.charAt(0) %>
+                  </div>
+                  <span>
+                    <%= student.name %>
+                  </span>
+                </td>
+                <td>
+                  <%= student.id %>
+                </td>
+                <td>
+                  <%= student.email %>
+                </td>
+                <td class="actions">
+                  <button class="delete-btn" data-id="<%= student.id %>">🗑️</button>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+
+      <script src="/js/student-management.js"></script>
+</body>
+
+</html>

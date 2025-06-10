@@ -1,0 +1,163 @@
+/* Base Body */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/images/image.png') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #f9fafb;
+  color: #f2f3f5;
+  padding-left: 250px;
+  transition: padding-left 0.3s ease;
+}
+
+body.sidebar-collapsed {
+  padding-left: 0;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #2d3748;
+  color: #f2f3f5;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* Student Management Layout Container */
+.student-management {
+  margin-left: 0;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  padding-top: 80px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Transparent card-like wrapper */
+.student-management > .content-wrapper {
+  background-color: rgba(28, 28, 29, 0.85);
+  border-radius: 12px;
+  padding: 2rem;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  color: #f2f3f5;
+  overflow-x: hidden;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  body {
+    padding-left: 0;
+  }
+
+  .student-management {
+    margin: 100px 1rem 1rem 1rem;
+    padding: 1rem;
+    height: auto;
+  }
+}
+
+/* Page Header */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #f2f3f5;
+}
+
+.subtitle {
+  color: #cbd5e0;
+  margin-top: 0.5rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.search-bar input {
+  padding: 0.8rem 1rem;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 300px;
+  background-color: #1a202c;
+  color: #f2f3f5;
+  font-size: 0.9rem;
+}
+
+/* Table */
+.student-table {
+  background-color: #2d3748;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #4a5568;
+  color: #f2f3f5;
+}
+
+th {
+  background: #1a202c;
+  font-weight: 600;
+  color: #a0aec0;
+}
+
+/* Avatar in Name Cell */
+.student-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+/* Action buttons */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  color: #f2f3f5;
+}
+
+.actions button:hover {
+  background: #4a5568;
+}

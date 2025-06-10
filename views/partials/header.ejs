@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="sidebar">
+  <div class="logo-container">
+    <a href="/" class="logo">
+      <img src="/images/logo1.png" alt="HostelHub Admin" />
+      <span>HostelHub Admin</span>
+    </a>
+  </div>
+
+  <nav class="nav-menu">
+    <button id="sidebarToggle" class="sidebar-toggle">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <a href="/dashboard" class="nav-item <%= currentPage === 'dashboard' ? 'active' : '' %>">
+      <i class="fa-solid fa-chart-line icon dashboard-icon"></i>
+      <span>Dashboard Overview</span>
+    </a>
+
+    <a href="/student-management" class="nav-item <%= currentPage === 'student-management' ? 'active' : '' %>">
+      <i class="fa-solid fa-user-graduate icon students-icon"></i>
+      <span>Student Management</span>
+    </a>
+
+    <a href="/manage-room" class="nav-item <%= currentPage === 'manage-room' ? 'active' : '' %>">
+      <i class="fa-solid fa-door-open icon rooms-icon"></i>
+      <span>Room Management</span>
+    </a>
+
+    <a href="/applications" class="nav-item <%= currentPage === 'applications' ? 'active' : '' %>">
+      <i class="fa-solid fa-file-lines icon applications-icon"></i>
+      <span>Applications</span>
+    </a>
+
+    <a href="/report" class="nav-item <%= currentPage === 'report' ? 'active' : '' %>">
+      <i class="fa-solid fa-chart-pie icon reports-icon"></i>
+      <span>Reports & Analytics</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="/logout" class="nav-item logout">
+      <i class="fa-solid fa-right-from-bracket icon logout-icon"></i>
+      <span>Logout</span>
+    </a>
+  </div>
+</div>
