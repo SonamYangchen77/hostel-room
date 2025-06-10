@@ -10,5 +10,8 @@ async function ensureHostelsTable() {
   `);
   console.log('✅ Hostels table ensured');
 }
-
+await pool.query(`
+      ALTER TABLE hostels
+      ADD COLUMN IF NOT EXISTS gender VARCHAR(50);
+    `);
 module.exports = { ensureHostelsTable };
