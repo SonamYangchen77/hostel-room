@@ -2,16 +2,23 @@ const { pool } = require('../config/db');
 
 const Room = {
   ensureRoomsTable: async () => {
-    const query = `
+    // Create table if it doesn't exist
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS rooms (
         id SERIAL PRIMARY KEY,
         room_name VARCHAR(255) NOT NULL,
         hostel_id INTEGER REFERENCES hostels(id),
         is_available BOOLEAN DEFAULT true
       );
-    `;
-    await pool.query(query);
-    console.log('✅ rooms table ensured');
+    `);
+
+    // Add hostel_id column if it doesn't exist (for existing tables)
+    await pool.query(`
+      ALTER TABLE rooms
+      ADD COLUMN IF NOT EXISTS hostel_id INTEGER REFERENCES hostels(id);
+    `);
+
+    console.log('✅ rooms table ensured with hostel_id column');
   },
 
   deleteRoom: async (roomName, hostelId) => {
