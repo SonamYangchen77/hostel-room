@@ -4,8 +4,6 @@ const crypto = require('crypto');
 const { sendVerificationEmail, sendResetPasswordEmail } = require('../utils/mailer');
 require('dotenv').config();
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:5000'; // fallback for local development
-
 // SIGNUP CONTROLLER
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -22,14 +20,16 @@ const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const token = crypto.randomBytes(32).toString('hex');
-    const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    // Correctly store expiry as Date object (1 hour from now)
+    const expires = new Date(Date.now() + 60 * 60 * 1000);
 
     await pool.query(
       'INSERT INTO users (name, email, password, is_verified, verification_token, verification_token_expires) VALUES ($1, $2, $3, false, $4, $5)',
       [name, email, hashedPassword, token, expires]
     );
 
-    const verificationLink = `${BASE_URL}/verify?token=${token}`;
+    const verificationLink = `${process.env.BASE_URL}/verify?token=${token}`;
+
     await sendVerificationEmail(email, verificationLink);
 
     return res.status(200).json({ success: 'Signup successful! Check your email for verification.' });
@@ -44,7 +44,7 @@ const verifyEmail = async (req, res) => {
   const { token } = req.query;
   const tokenFromUrl = token?.trim();
 
-  console.log("📥 Token from URL:", tokenFromUrl);
+  console.log("📥 Token from URL:", tokenFromUrl); // DEBUG
 
   const debugQuery = await pool.query('SELECT email, verification_token FROM users');
   console.log("🧾 All tokens in DB:", debugQuery.rows);
@@ -68,13 +68,13 @@ const verifyEmail = async (req, res) => {
     }
 
     if (user.is_verified) {
-      return res.send(`<h3>Email already verified.</h3><a href="${BASE_URL}/landing">Go to login</a>`);
+      return res.send('<h3>Email already verified.</h3><a href="/landing">Go to login</a>');
     }
 
     if (new Date() > new Date(user.verification_token_expires)) {
       return res.status(400).send(`
         <h3>Verification link has expired.</h3>
-        <p><a href="${BASE_URL}/resend-verification">Click here</a> to resend the verification email.</p>
+        <p><a href="/resend-verification">Click here</a> to resend the verification email.</p>
       `);
     }
 
@@ -85,7 +85,7 @@ const verifyEmail = async (req, res) => {
       [user.id]
     );
 
-    return res.send(`<h3>Email verified successfully!</h3><a href="${BASE_URL}/landing">Login</a>`);
+    return res.send('<h3>Email verified successfully!</h3><a href="/landing">Login</a>');
   } catch (err) {
     console.error('❌ Email verification error:', err);
     return res.status(500).send('Server error during email verification.');
@@ -158,7 +158,7 @@ const forgotPassword = async (req, res) => {
       [token, expires, email]
     );
 
-    const resetLink = `${BASE_URL}/reset-password?token=${token}`;
+    const resetLink = `${process.env.BASE_URL}/reset-password?token=${token}`;
     console.log('📧 Sending password reset link:', resetLink);
 
     await sendResetPasswordEmail(email, resetLink);
@@ -226,14 +226,15 @@ const resendVerification = async (req, res) => {
     }
 
     const token = crypto.randomBytes(32).toString('hex');
-    const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    // Store expiry as Date object (10 minutes from now)
+    const expires = new Date(Date.now() + 10 * 60 * 1000);
 
     await pool.query(
       `UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE email = $3`,
       [token, expires, email]
     );
 
-    const verificationLink = `${BASE_URL}/verify?token=${token}`;
+    const verificationLink = `${process.env.BASE_URL}/verify?token=${token}`;
     await sendVerificationEmail(email, verificationLink);
 
     return res.status(200).json({ success: 'New verification link sent to your email.' });
