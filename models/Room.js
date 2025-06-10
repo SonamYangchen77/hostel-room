@@ -6,7 +6,7 @@ const Room = {
       CREATE TABLE IF NOT EXISTS rooms (
         id SERIAL PRIMARY KEY,
         room_name VARCHAR(255) NOT NULL,
-        hostel_name VARCHAR(255) NOT NULL,
+        hostel_id INTEGER REFERENCES hostels(id),
         is_available BOOLEAN DEFAULT true
       );
     `;
@@ -14,25 +14,25 @@ const Room = {
     console.log('✅ rooms table ensured');
   },
 
-  deleteRoom: async (roomName, hostelName) => {
+  deleteRoom: async (roomName, hostelId) => {
     const query = `
       DELETE FROM rooms
-      WHERE room_name = $1 AND hostel_name = $2
+      WHERE room_name = $1 AND hostel_id = $2
       RETURNING *;
     `;
-    const values = [roomName, hostelName];
+    const values = [roomName, hostelId];
     const result = await pool.query(query, values);
     return result.rows[0];
   },
 
-  setRoomAvailability: async (roomName, isAvailable) => {
+  setRoomAvailability: async (roomName, hostelId, isAvailable) => {
     const query = `
       UPDATE rooms
       SET is_available = $1
-      WHERE room_name = $2
+      WHERE room_name = $2 AND hostel_id = $3
       RETURNING *;
     `;
-    const values = [isAvailable, roomName];
+    const values = [isAvailable, roomName, hostelId];
     const result = await pool.query(query, values);
     return result.rows[0];
   }
