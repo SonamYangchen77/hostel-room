@@ -128,17 +128,6 @@ app.get('/availability', (req, res) => {
 });
 
 app.get('/student-management', studentController.getStudentManagementPage);
-
-app.get('/manage-room', async (req, res) => {
-  try {
-    const hostelsResult = await pool.query('SELECT id, name FROM hostels ORDER BY name');
-    res.render('manage-room', { hostels: hostelsResult.rows });
-  } catch (err) {
-    console.error('Error fetching hostels:', err);
-    res.status(500).send('Server error');
-  }
-});
-
 app.get('/verify', authController.verifyEmail);
 
 app.get('/reset-password', (req, res) => {
