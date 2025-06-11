@@ -7,23 +7,28 @@ const pool = new Pool({
     rejectUnauthorized: false, // Only use this in development or trusted environments
   },
 });
-
 async function seedHostels() {
   try {
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS hostels (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL UNIQUE,
+        gender VARCHAR(10) NOT NULL
+      );
+
       INSERT INTO hostels (name, gender)
       VALUES 
-        ('Yoentenling', 'Male'),
-        ('Noebuling', 'Female'),
-        ('Yearsholing', 'Female'),
-        ('Rabtenling', 'Male')
+        ('Sunrise Hostel', 'Male'),
+        ('Moonlight Hostel', 'Female'),
+        ('Evergreen Hostel', 'Male'),
+        ('Rose Hostel', 'Female')
       ON CONFLICT (name) DO NOTHING;
     `);
 
     console.log('✅ Hostels seeded successfully');
     process.exit();
-  } catch (error) {
-    console.error('❌ Error seeding hostels:', error);
+  } catch (err) {
+    console.error('❌ Error seeding hostels:', err);
     process.exit(1);
   }
 }
