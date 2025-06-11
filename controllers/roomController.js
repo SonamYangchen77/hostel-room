@@ -5,6 +5,7 @@ exports.renderManageRoom = async (req, res) => {
     const hostelsResult = await pool.query('SELECT id, name, gender FROM hostels ORDER BY name');
     const hostels = hostelsResult.rows;
 
+
     res.render('manage-room', {
       hostels,
       currentPage: 'room-management',
