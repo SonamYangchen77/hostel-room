@@ -10,8 +10,9 @@ const pool = new Pool({
     await pool.query(`
       INSERT INTO hostels (name, gender)
       VALUES 
-        ('Sunrise Hostel', 'Male'),
-        ('Moonlight Hostel', 'Female');
+        ('Yoentenling', 'Male'),
+        ('Norbuling', 'Female')
+      ON CONFLICT (name) DO NOTHING;
     `);
     console.log('✅ Seeded hostels successfully');
     process.exit();
