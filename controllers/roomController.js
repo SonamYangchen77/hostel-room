@@ -2,8 +2,12 @@ const pool = require('../config/db');
 
 exports.renderManageRoom = async (req, res) => {
   try {
-    const hostelsResult = await pool.query('SELECT id, name, gender FROM hostels ORDER BY name');
-    const hostels = hostelsResult.rows;
+    const hostels = [
+      { id: 1, name: 'Sunrise Hostel', gender: 'Male' },
+      { id: 2, name: 'Moonlight Hostel', gender: 'Female' }
+    ];
+
+    console.log("Rendering with hardcoded hostels:", hostels);
 
     res.render('manage-room', {
       hostels,
@@ -14,6 +18,7 @@ exports.renderManageRoom = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 
 exports.getRooms = async (req, res) => {
   try {
