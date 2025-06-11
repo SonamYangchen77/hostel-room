@@ -1,25 +1,31 @@
-require('dotenv').config();
 const { Pool } = require('pg');
 
+// Replace this with your actual connection string
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://hostelroom_user:AbqVU5uRq6AHZeVfo0RKtTUyqD9BtG7N@dpg-d13quh0gjchc73ffhevg-a.oregon-postgres.render.com/hostelroom
-',
-  ssl: { rejectUnauthorized: false },
+  connectionString: 'postgresql://hostelroom_user:AbqVU5uRq6AHZeVfo0RKtTUyqD9BtG7N@dpg-d13quh0gjchc73ffhevg-a.oregon-postgres.render.com/hostelroom',
+  ssl: {
+    rejectUnauthorized: false, // Only use this in development or trusted environments
+  },
 });
 
-(async () => {
+async function seedHostels() {
   try {
     await pool.query(`
       INSERT INTO hostels (name, gender)
       VALUES 
-        ('Sunrise Hostel', 'Male'),
-        ('Moonlight Hostel', 'Female')
+        ('Yoentenling', 'Male'),
+        ('Noebuling', 'Female'),
+        ('Yearsholing', 'Female'),
+        ('Rabtenling', 'Male')
       ON CONFLICT (name) DO NOTHING;
     `);
-    console.log('✅ Seeded hostels successfully');
+
+    console.log('✅ Hostels seeded successfully');
     process.exit();
-  } catch (err) {
-    console.error('❌ Error seeding hostels:', err);
+  } catch (error) {
+    console.error('❌ Error seeding hostels:', error);
     process.exit(1);
   }
-})();
+}
+
+seedHostels();
