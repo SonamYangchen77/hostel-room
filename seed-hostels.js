@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'postgresql://hostelroom_user:AbqVU5uRq6AHZeVfo0RKtTUyqD9BtG7N@dpg-d13quh0gjchc73ffhevg-a/hostelroom',
+  connectionString: 'render psql dpg-d13quh0gjchc73ffhevg-a',
   ssl: {
     rejectUnauthorized: false,
   },
