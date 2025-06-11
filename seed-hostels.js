@@ -1,10 +1,8 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'render psql dpg-d13quh0gjchc73ffhevg-a',
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  connectionString: 'render psql dpg-d13quh0gjchc73ffhevg-a', // or use process.env.DATABASE_URL
+  ssl: { rejectUnauthorized: false }
 });
 
 (async () => {
@@ -15,10 +13,10 @@ const pool = new Pool({
         ('Sunrise Hostel', 'Male'),
         ('Moonlight Hostel', 'Female');
     `);
-    console.log('Hostels seeded successfully!');
+    console.log('✅ Seeded hostels successfully');
     process.exit();
   } catch (err) {
-    console.error('Error seeding:', err);
+    console.error('❌ Error seeding hostels:', err);
     process.exit(1);
   }
 })();
