@@ -5,7 +5,7 @@ exports.renderManageRoom = async (req, res) => {
     const hostelsResult = await pool.query('SELECT id, name, gender FROM hostels ORDER BY name');
     const hostels = hostelsResult.rows;
 
-    console.log('🏨 Hostels fetched for /manage-room:', hostels); // <--- Add this line
+    console.log('🔍 Hostels fetched for renderManageRoom:', hostels); // <-- ADD THIS
 
     res.render('manage-room', {
       hostels,
@@ -16,6 +16,7 @@ exports.renderManageRoom = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 
 
 
