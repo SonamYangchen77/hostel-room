@@ -1,8 +1,10 @@
+require('dotenv').config();
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'render psql dpg-d13quh0gjchc73ffhevg-a', // or use process.env.DATABASE_URL
-  ssl: { rejectUnauthorized: false }
+  connectionString: process.env.DATABASE_URL || 'postgresql://hostelroom_user:AbqVU5uRq6AHZeVfo0RKtTUyqD9BtG7N@dpg-d13quh0gjchc73ffhevg-a.oregon-postgres.render.com/hostelroom
+',
+  ssl: { rejectUnauthorized: false },
 });
 
 (async () => {
@@ -10,8 +12,8 @@ const pool = new Pool({
     await pool.query(`
       INSERT INTO hostels (name, gender)
       VALUES 
-        ('Yoentenling', 'Male'),
-        ('Norbuling', 'Female')
+        ('Sunrise Hostel', 'Male'),
+        ('Moonlight Hostel', 'Female')
       ON CONFLICT (name) DO NOTHING;
     `);
     console.log('✅ Seeded hostels successfully');
