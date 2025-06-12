@@ -5,11 +5,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 
-const { pool, ensureUsersTable } = require('./config/db');
+const { pool, ensureUsersTable, ensureHostelsTable, insertHostel, query } = require('./config/db');
 const { ensureRoomsTable } = require('./models/Room');
-const { ensureHostelsTable } = require('./models/Hostel');
 const { ensureApplicationsTable } = require('./models/Application');
-const { ensureActivitiesTable } = require('./models/Activity');// <-- Ensure this is defined
+const { ensureActivitiesTable } = require('./models/Activity');
 const studentController = require('./controllers/studentController');
 const authController = require('./controllers/authController');
 
@@ -43,10 +42,24 @@ async function ensureSessionTable() {
     throw err;
   }
 }
-(async () => {
+
+// Initialization function to ensure all tables and seed data
+async function init() {
+  await ensureUsersTable();
+  await ensureHostelsTable();
+  await ensureRoomsTable();
+  await ensureApplicationsTable();
   await ensureActivitiesTable();
-})();
-// Middleware
+  await ensureSessionTable();
+
+  // Insert default hostel if none exist
+  const hostelsResult = await query('SELECT * FROM hostels');
+  if (hostelsResult.rows.length === 0) {
+    const newHostel = await insertHostel('Green Hostel', 'Male');
+    console.log('Inserted default hostel:', newHostel);
+  }
+}
+
 app.use(session({
   store: new pgSession({
     pool: pool,
@@ -85,7 +98,7 @@ app.get('/', (req, res) => {
 
 app.get('/dashboard', async (req, res) => {
   try {
-    const result = await pool.query('SELECT COUNT(*) FROM users');
+    const result = await query('SELECT COUNT(*) FROM users');
     const totalStudents = result.rows[0].count;
     res.render('dashboard', { totalStudents });
   } catch (err) {
@@ -96,10 +109,10 @@ app.get('/dashboard', async (req, res) => {
 
 app.get('/home', async (req, res) => {
   try {
-    const userResult = await pool.query('SELECT COUNT(*) FROM users');
+    const userResult = await query('SELECT COUNT(*) FROM users');
     const totalUsers = userResult.rows[0].count;
 
-    const hostelResult = await pool.query('SELECT COUNT(*) FROM hostels');
+    const hostelResult = await query('SELECT COUNT(*) FROM hostels');
     const totalHostels = hostelResult.rows[0].count;
 
     res.render('home', {
@@ -143,20 +156,14 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Ensure DB schema and start server
-Promise.all([
-  ensureUsersTable(),
-  ensureSessionTable(),
-  ensureHostelsTable(),
-  ensureRoomsTable(),
-  ensureApplicationsTable()
-])
+// Start server after initialization
+init()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`✅ Server running on port ${PORT}`);
     });
   })
-  .catch((err) => {
+  .catch(err => {
     console.error("❌ Failed to set up database:", err);
     process.exit(1);
   });
