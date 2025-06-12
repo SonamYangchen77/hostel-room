@@ -5,13 +5,14 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 
-const { pool, ensureUsersTable, ensureHostelsTable, insertHostel, query } = require('./config/db');
+const { pool, ensureUsersTable, query } = require('./config/db');
 const { ensureRoomsTable } = require('./models/Room');
 const { ensureApplicationsTable } = require('./models/Application');
 const { ensureActivitiesTable } = require('./models/Activity');
+const { ensureHostelsTable, insertHostel } = require('./models/Hostel');
+
 const studentController = require('./controllers/studentController');
 const authController = require('./controllers/authController');
-const { ensureHostelsTable, insertHostel } = require('./models/Hostel');
 
 const authRoutes = require('./routes/authRoutes');
 const availabilityRoutes = require('./routes/availabilityRoutes');
