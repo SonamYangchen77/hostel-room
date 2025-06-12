@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const roomController = require('../controllers/roomController');
 
+// Route to render the manage room page (server-rendered page)
 router.get('/manage-room', roomController.renderManageRoom);
-router.get('/api/rooms', roomController.getRooms);
-router.post('/api/rooms', roomController.addRoom);
-router.put('/api/rooms/:id', roomController.updateRoom);
-router.delete('/api/rooms/:id', roomController.deleteRoom);
+
+// API Endpoints
+router.get('/api/rooms', roomController.getRooms);        // Get all rooms
+router.post('/api/rooms', roomController.addRoom);        // Add new room
+router.put('/api/rooms/:id', roomController.updateRoom);  // Update existing room
+router.delete('/api/rooms/:id', roomController.deleteRoom); // Delete a room
 
 module.exports = router;
