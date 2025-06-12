@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const roomController = require('../controllers/roomController');
 
-router.get('/manage-rooms', roomController.renderManageRoom);
+router.get('/manage-room', roomController.renderManageRoom);
+
 
 
 
