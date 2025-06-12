@@ -15,26 +15,26 @@
   <main class="container">
     <div class="content-wrapper">
       <h1>Manage Rooms</h1>
-      <p>Debug: Hostels length = <%= hostels.length %></p>
-      <pre><%= JSON.stringify(hostels, null, 2) %></pre>
 
+      <!-- Debug output to check hostels -->
+      <p>Debug: Hostels length = <%= hostels ? hostels.length : 0 %></p>
+      <pre><%= JSON.stringify(hostels, null, 2) %></pre>
 
       <div id="success-message" style="color: green; font-weight: bold; margin-bottom: 1rem;"></div>
 
       <form id="room-form">
         <input type="hidden" id="room-id" name="room_id" />
 
-        <label for="hostel-select">
-          Hostel:
-          <select id="hostel-select" name="hostel_id" required>
-            <option value="">Select Hostel</option>
+        <label for="hostel-select">Hostel:</label>
+        <select name="hostel" id="hostel-select" required>
+          <% if (hostels && hostels.length > 0) { %>
             <% hostels.forEach(hostel => { %>
-              <option value="<%= hostel.id %>">
-                <%= hostel.name %> (<%= hostel.gender %>)
-              </option>
-            <% }) %>
-          </select>
-        </label>
+              <option value="<%= hostel.id %>"><%= hostel.name %> (<%= hostel.gender %>)</option>
+            <% }); %>
+          <% } else { %>
+            <option disabled>No hostels available</option>
+          <% } %>
+        </select>
 
         <label for="room-name">
           Room Number:
@@ -50,9 +50,7 @@
         <button type="button" id="cancel-btn" style="display: none;">Cancel</button>
       </form>
 
-      <div id="rooms-container">
-
-      </div>
+      <div id="rooms-container"></div>
     </div>
   </main>
 
