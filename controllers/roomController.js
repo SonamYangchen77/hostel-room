@@ -40,7 +40,6 @@ exports.addRoom = async (req, res) => {
   try {
     let { hostel_id, room_name, is_available } = req.body;
 
-    // Parse correctly
     hostel_id = parseInt(hostel_id, 10);
     is_available = is_available === true || is_available === 'true';
 
@@ -48,18 +47,21 @@ exports.addRoom = async (req, res) => {
       return res.status(400).json({ message: 'Missing hostel or room name.' });
     }
 
-    // Validate hostel_id exists
-    const hostelResult = await pool.query('SELECT id FROM hostels WHERE id = $1', [hostel_id]);
+    // Fetch hostel name
+    const hostelResult = await pool.query('SELECT name FROM hostels WHERE id = $1', [hostel_id]);
 
     if (hostelResult.rows.length === 0) {
       console.error('Hostel ID not found:', hostel_id);
       return res.status(400).json({ message: 'Invalid hostel ID.' });
     }
 
+    const hostel_name = hostelResult.rows[0].name;
+
+    // Insert room with hostel_name
     await pool.query(
-      `INSERT INTO rooms (hostel_id, room_name, is_available)
-       VALUES ($1, $2, $3)`,
-      [hostel_id, room_name, is_available]
+      `INSERT INTO rooms (hostel_id, room_name, is_available, hostel_name)
+       VALUES ($1, $2, $3, $4)`,
+      [hostel_id, room_name, is_available, hostel_name]
     );
 
     res.status(201).json({ message: 'Room added successfully' });
