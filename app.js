@@ -57,7 +57,10 @@ async function init() {
   // Insert default hostel if none exist
   const hostelsResult = await query('SELECT * FROM hostels');
   if (hostelsResult.rows.length === 0) {
-    const newHostel = await insertHostel('Green Hostel', 'Male');
+    const newHostel = await insertHostel('Yoentenling', 'Male');
+    const newHostel = await insertHostel('Rabtenling', 'Male');
+    const newHostel = await insertHostel('Norbuling', 'Female');
+    const newHostel = await insertHostel('Yeatsholing', 'Female');
     console.log('Inserted default hostel:', newHostel);
   }
 }
