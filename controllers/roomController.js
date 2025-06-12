@@ -5,7 +5,7 @@ exports.renderManageRoom = async (req, res) => {
     const hostelsResult = await pool.query('SELECT id, name, gender FROM hostels ORDER BY name');
     const hostels = hostelsResult.rows;
 
-    console.log('🔍 Hostels fetched for renderManageRoom:', hostels); // <-- ADD THIS
+    console.log('🔍 Hostels fetched for renderManageRoom:', hostels);
 
     res.render('manage-room', {
       hostels,
@@ -16,10 +16,6 @@ exports.renderManageRoom = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
-
-
-
-
 
 exports.getRooms = async (req, res) => {
   try {
@@ -36,6 +32,7 @@ exports.getRooms = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 exports.addRoom = async (req, res) => {
   try {
     let { hostel_id, room_name, is_available } = req.body;
@@ -47,21 +44,18 @@ exports.addRoom = async (req, res) => {
       return res.status(400).json({ message: 'Missing hostel or room name.' });
     }
 
-    // Fetch hostel name
-    const hostelResult = await pool.query('SELECT name FROM hostels WHERE id = $1', [hostel_id]);
-
+    // Check if hostel exists
+    const hostelResult = await pool.query('SELECT id FROM hostels WHERE id = $1', [hostel_id]);
     if (hostelResult.rows.length === 0) {
       console.error('Hostel ID not found:', hostel_id);
       return res.status(400).json({ message: 'Invalid hostel ID.' });
     }
 
-    const hostel_name = hostelResult.rows[0].name;
-
-    // Insert room with hostel_name
+    // Insert room WITHOUT storing hostel_name if normalized
     await pool.query(
-      `INSERT INTO rooms (hostel_id, room_name, is_available, hostel_name)
-       VALUES ($1, $2, $3, $4)`,
-      [hostel_id, room_name, is_available, hostel_name]
+      `INSERT INTO rooms (hostel_id, room_name, is_available)
+       VALUES ($1, $2, $3)`,
+      [hostel_id, room_name, is_available]
     );
 
     res.status(201).json({ message: 'Room added successfully' });
@@ -71,7 +65,6 @@ exports.addRoom = async (req, res) => {
   }
 };
 
-// Corrected updateRoom: use room_name, do NOT update hostel_name or gender in rooms table
 exports.updateRoom = async (req, res) => {
   try {
     const { id } = req.params;
@@ -84,11 +77,7 @@ exports.updateRoom = async (req, res) => {
       return res.status(400).json({ message: 'Missing required fields.' });
     }
 
-    const hostelResult = await pool.query(
-      'SELECT id FROM hostels WHERE id = $1',
-      [hostel_id]
-    );
-
+    const hostelResult = await pool.query('SELECT id FROM hostels WHERE id = $1', [hostel_id]);
     if (hostelResult.rows.length === 0) {
       console.error('Hostel ID not found for update:', hostel_id);
       return res.status(400).json({ message: 'Invalid hostel ID.' });
@@ -107,8 +96,6 @@ exports.updateRoom = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
-
 
 exports.deleteRoom = async (req, res) => {
   try {
