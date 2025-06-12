@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const roomController = require('../controllers/roomController');
 
-// Route to render the manage room page
+
 router.get('/manage-room', roomController.renderManageRoom);
+
+
 
 // API routes for rooms
 router.get('/api/rooms', roomController.getRooms);
