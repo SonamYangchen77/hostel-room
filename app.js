@@ -54,17 +54,25 @@ async function init() {
   await ensureActivitiesTable();
   await ensureSessionTable();
 
-  // Insert default hostel if none exist
+  // Insert default hostels if none exist
   const hostelsResult = await query('SELECT * FROM hostels');
   if (hostelsResult.rows.length === 0) {
-    const newHostel = await insertHostel('Yoentenling', 'Male');
-    const newHostel = await insertHostel('Rabtenling', 'Male');
-    const newHostel = await insertHostel('Norbuling', 'Female');
-    const newHostel = await insertHostel('Yeatsholing', 'Female');
-    console.log('Inserted default hostel:', newHostel);
+    const defaultHostels = [
+      { name: 'Yoentenling', gender: 'Male' },
+      { name: 'Rabtenling', gender: 'Male' },
+      { name: 'Norbuling', gender: 'Female' },
+      { name: 'Yeatsholing', gender: 'Female' }
+    ];
+
+    for (const { name, gender } of defaultHostels) {
+      await insertHostel(name, gender);
+    }
+
+    console.log('✅ Inserted default hostels');
   }
 }
 
+// Session middleware
 app.use(session({
   store: new pgSession({
     pool: pool,
@@ -76,9 +84,11 @@ app.use(session({
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));
 
+// View engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
