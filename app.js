@@ -11,6 +11,7 @@ const { ensureApplicationsTable } = require('./models/Application');
 const { ensureActivitiesTable } = require('./models/Activity');
 const studentController = require('./controllers/studentController');
 const authController = require('./controllers/authController');
+const { ensureHostelsTable, insertHostel } = require('./models/Hostel');
 
 const authRoutes = require('./routes/authRoutes');
 const availabilityRoutes = require('./routes/availabilityRoutes');
